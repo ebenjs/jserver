@@ -1,0 +1,42 @@
+[
+  {
+    "name": "banana",
+    "price": 1.99
+  },
+  {
+    "name": "apple",
+    "price": 2.99
+  },
+  {
+    "name": "orange",
+    "price": 3.99
+  },
+  {
+    "name": "pear",
+    "price": 4.99
+  },
+  {
+    "name": "grape",
+    "price": 5.99
+  },
+  {
+    "name": "pineapple",
+    "price": 6.99
+  },
+  {
+    "name": "watermelon",
+    "price": 7.99
+  },
+  {
+    "name": "kiwi",
+    "price": 8.99
+  },
+  {
+    "name": "mango",
+    "price": 9.99
+  },
+  {
+    "name": "strawberry",
+    "price": 10.99
+  }
+]
