@@ -10,6 +10,7 @@ A lightweight web server written in TypeScript for serving static JSON files. Th
 - Serve static JSON files over HTTP.
 
 - Support for CORS (Cross-Origin Resource Sharing) to facilitate cross-origin requests.
+
 [//]: # (- Serve a whole directory of JSON files as a separate endpoints.)
 
 [//]: # (- Nice and clean web interface for viewing and interacting with your JSON data.)
