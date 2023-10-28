@@ -2,6 +2,7 @@
 
 import chalk from 'chalk'
 import express, { type Express } from 'express'
+import cors from 'cors'
 import { logger } from './utils/logger.js'
 import { isFolderOrFile } from './utils/helpers.js'
 import { PathType } from './utils/parser.js'
@@ -13,6 +14,7 @@ const app: Express = express()
 const port: number = 3000
 
 app.use(express.json())
+app.use(cors())
 
 const command = process.argv[2]
 const path = process.argv[3]
