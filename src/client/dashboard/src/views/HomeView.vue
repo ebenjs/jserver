@@ -1,9 +1,31 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import LeftNavigation from "@/components/home/LeftNavigation.vue";
+import MainContent from "@/components/home/MainContent.vue";
+import SubContent from "@/components/home/SubContent.vue";
+import RightNavigation from "@/components/home/RightNavigation.vue";
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
+  <main class="h-100">
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-lg-3 p-0">
+          <LeftNavigation/>
+        </div>
+        <div class="col-lg-6 p-0">
+          <MainContent/>
+        </div>
+        <div class="col-lg-3">
+          <div class="row h-100">
+            <div class="col-lg-9 p-0">
+              <SubContent/>
+            </div>
+            <div class="col-lg-3 p-0">
+              <RightNavigation/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </template>

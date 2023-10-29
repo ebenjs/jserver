@@ -1,0 +1,13 @@
+@import 'styles/colors';
+@import 'styles/variables';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+body, html {
+  height: 100%;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+  background-color: $tertiary-color;
+  color: $primary-text-color;
+}

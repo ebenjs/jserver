@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import 'dotenv/config'
 import chalk from 'chalk'
 import express, { type Express } from 'express'
 import cors from 'cors'
@@ -39,6 +40,6 @@ if (isFolderOrFile(path) === PathType.file) {
   logger.info(`${processedText}  ${chalk.green(Math.round((performance.now() - startTime) * 100) / 100)} milliseconds`)
 }
 
-app.listen(port, () => {
-  logger.info(`${serverStartedText} http://localhost:${port}`)
+app.listen(process.env.DEFAULT_SERVER_PORT, () => {
+  logger.info(`${serverStartedText} ${process.env.DEFAULT_SERVER_URL}:${port}`)
 })

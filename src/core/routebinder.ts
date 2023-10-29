@@ -7,6 +7,14 @@ export const bindSingleFileRoutes = (fullPath: string, app: Express, baseFileNam
   const data: object[] = exposeJsonData(fullPath)
   setState(data)
 
+  app.get('/metadata', (req, res) => {
+    res.statusCode = 200
+    res.json({
+      name: baseFileName,
+      url: `${process.env.DEFAULT_SERVER_URL}:${process.env.DEFAULT_SERVER_PORT}`
+    })
+  })
+
   app.get(`/${baseFileName}`, (req, res) => {
     res.statusCode = 200
     res.json(getState())
