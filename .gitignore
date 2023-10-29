@@ -11,5 +11,5 @@ dist/
 **.log
 
 #client
-client/dashboard/
-!client/dashboard/dist
+src/client/dashboard/
+!src/client/dashboard/dist
