@@ -9,3 +9,7 @@ dist/
 
 #logs
 **.log
+
+#client
+client/dashboard/
+!client/dashboard/dist
