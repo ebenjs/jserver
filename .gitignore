@@ -10,6 +10,3 @@ dist/
 #logs
 **.log
 
-#client
-src/client/dashboard/
-!src/client/dashboard/dist
