@@ -3,6 +3,12 @@ import LeftNavigation from "@/components/home/LeftNavigation.vue";
 import MainContent from "@/components/home/MainContent.vue";
 import SubContent from "@/components/home/SubContent.vue";
 import RightNavigation from "@/components/home/RightNavigation.vue";
+import {ref} from "vue";
+
+const data = ref({});
+const handleEndpointSelected = (receivedData) => {
+  data.value = receivedData;
+}
 </script>
 
 <template>
@@ -10,10 +16,10 @@ import RightNavigation from "@/components/home/RightNavigation.vue";
     <div class="container-fluid h-100">
       <div class="row h-100">
         <div class="col-lg-3 p-0">
-          <LeftNavigation/>
+          <LeftNavigation @endpoint-selected="handleEndpointSelected"/>
         </div>
         <div class="col-lg-6 p-0">
-          <MainContent/>
+          <MainContent :data="data"/>
         </div>
         <div class="col-lg-3">
           <div class="row h-100">

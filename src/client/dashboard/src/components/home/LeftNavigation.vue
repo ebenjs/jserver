@@ -36,6 +36,7 @@ onMounted(() => {
         ]
       });
 });
+
 </script>
 
 <template>
@@ -51,7 +52,8 @@ onMounted(() => {
           Click on any of the endpoints to see the details.
         </div>
       </div>
-      <VerbPanel v-for="verb in supportedVerbs" :key="verb.label" :verb="verb" :resource="metadata"/>
+      <VerbPanel @click="$emit('endpoint-selected', {verb: verb, metadata: metadata})" v-for="verb in supportedVerbs"
+                 :key="verb.label" :verb="verb" :resource="metadata"/>
     </div>
   </div>
 </template>
