@@ -8,6 +8,31 @@ body, html {
 
 body{
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   background-color: $tertiary-color;
   color: $primary-text-color;
+}
+
+.highlight{
+    color: $primary-accent-color;
+}
+
+.alert-warning{
+  @include alert-warning;
+}
+
+.alert-success{
+  @include alert-success;
+}
+
+.alert-danger{
+  @include alert-danger;
+}
+
+.alert-info{
+  @include alert-info;
+}
+
+.alert-primary{
+  @include alert-primary;
 }

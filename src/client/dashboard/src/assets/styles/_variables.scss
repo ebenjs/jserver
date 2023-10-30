@@ -1,0 +1,37 @@
+@import "colors";
+
+@mixin alert-warning {
+  background-color: $alert-warning-background-color;
+  color: $alert-warning-text-color;
+  border-left: solid 5px $alert-warning-border-color;
+  padding: 1rem;
+}
+
+@mixin alert-success {
+  background-color: lighten($primary-accent-color, 10);
+  color: $primary-text-color;
+  border-left: solid 5px darken($primary-accent-color, 20%);
+  padding: 1rem;
+}
+
+@mixin alert-danger {
+  background-color: #990833;
+  color: $primary-text-color;
+  border-left: solid 5px darken(#990833, 10%);
+  padding: 1rem;
+}
+
+@mixin alert-info {
+  background-color: #367eea;
+  color: $primary-text-color;
+  border-left: solid 5px darken(#367eea, 10%);
+  padding: 1rem;
+}
+
+@mixin alert-primary {
+  background-color: $primary-color;
+  color: $tertiary-accent-color;
+  border: solid 1px darken($tertiary-accent-color, 10%);
+  border-radius: 5px;
+  padding: 1rem;
+}

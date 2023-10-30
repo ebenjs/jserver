@@ -32,7 +32,7 @@ const props = defineProps({
       <VerbPreview :label="verb.label"/>
     </div>
     <div class="flex-grow-1 ms-3">
-      <div class="fw-bold">{{ `${resource.url}${verb.suffix}` }}</div>
+      <div class="fw-semibold">{{ `${resource.url}${verb.suffix}` }}</div>
       <div class="">{{ verb.description }}</div>
     </div>
   </div>
@@ -42,5 +42,7 @@ const props = defineProps({
 .verb-panel:hover {
   background-color: $primary-color;
   cursor: pointer;
+  //color: $primary-accent-color;
+  color: lighten($secondary-accent-color, 12%);
 }
 </style>
