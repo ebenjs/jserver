@@ -4,6 +4,7 @@
 
 body, html {
   height: 100%;
+  overflow: hidden;
 }
 
 body{
@@ -35,6 +36,11 @@ body{
 
 .alert-primary{
   @include alert-primary;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: normal;
 }
 
 .ace_scrollbar {

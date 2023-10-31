@@ -5,7 +5,7 @@
 <template>
   <div class="app-bar-wrapper d-flex align-items-center px-5 mt-2">
     <p><img src="@/assets/images/json-5.svg" alt="jserver logo" class="logo"/></p>
-    <p class="brand">Jserver v0.0.1</p>
+    <p class="brand">JServer v0.0.1</p>
   </div>
 </template>
 

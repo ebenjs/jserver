@@ -2,7 +2,9 @@
 import type {PropType} from "vue";
 import {computed, onMounted, reactive, ref, watch} from "vue";
 import {VAceEditor} from 'vue3-ace-editor';
-import workerJsonUrl from "ace-builds/src-noconflict/worker-json.js";
+import ace from "ace-builds/src-noconflict/ace";
+import beautify from "ace-builds/src-noconflict/ext-beautify";
+import jsbeautify from 'js-beautify';
 import '@/../ace.config'
 
 interface RequestDataTypes {
@@ -17,23 +19,41 @@ const props = defineProps({
   }
 });
 
-const copyData = ref(props.data);
-const requestBody = ref()
-
-const themes = ['github', 'chrome', 'monokai'];
-
 const url = computed(() => {
   return `${props.data?.metadata.url}/${props.data.metadata.name}${props.data?.verb.suffix}`;
 });
-// compute proper class name for the verb button
+
 const verbButtonClass = computed(() => {
   return `${props.data?.verb.label.toLowerCase()}-button`;
+});
+
+const schema = computed(() => {
+  const schema = {};
+  const data = props.data?.metadata?.schema;
+  for (const key in data) {
+    schema[key] = typeof data[key];
+  }
+  return schema;
 });
 
 const states = ref({
   lang: 'json',
   theme: 'monokai',
-  content: '{}',
+  content: `${jsbeautify(JSON.stringify(schema.value), {indent_size: 4, space_in_empty_paren: true})}`,
+});
+
+onMounted( () => {
+  const editor = ace.edit("editor");
+  editor.commands.addCommand({
+    name: "beautify",
+    bindKey: {
+      win: "Ctrl-Shift-B",
+      mac: "Command-Shift-B",
+    },
+    exec: function () {
+      beautify.beautify(editor.session);
+    },
+  });
 });
 
 </script>
@@ -62,7 +82,7 @@ const states = ref({
       <div class="row mt-2">
         <div class="col">
           <VAceEditor
-              ref="aceRef"
+              id="editor"
               v-model:value="states.content"
               class="vue-ace-editor"
               :lang="states.lang"
@@ -139,9 +159,5 @@ select {
   flex: 1;
   min-height: 22rem;
   border-radius: 0.5rem;
-}
-.title {
-  font-size: 1.2rem;
-  font-weight: normal;
 }
 </style>

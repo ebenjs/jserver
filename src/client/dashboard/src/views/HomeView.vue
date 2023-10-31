@@ -6,6 +6,7 @@ import RightNavigation from "@/components/home/RightNavigation.vue";
 import {ref} from "vue";
 
 const data = ref({});
+const response = ref({ isServerData: false, data: {} });
 const handleEndpointSelected = (receivedData) => {
   data.value = receivedData;
 }
@@ -23,10 +24,10 @@ const handleEndpointSelected = (receivedData) => {
         </div>
         <div class="col-lg-3">
           <div class="row h-100">
-            <div class="col-lg-9 p-0">
-              <SubContent/>
+            <div class="col-lg-10 p-0">
+              <SubContent :response="response"/>
             </div>
-            <div class="col-lg-3 p-0">
+            <div class="col-lg-2 p-0">
               <RightNavigation/>
             </div>
           </div>

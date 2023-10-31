@@ -31,7 +31,7 @@
 @mixin alert-primary {
   background-color: $primary-color;
   color: $tertiary-accent-color;
-  border: solid 1px darken($tertiary-accent-color, 10%);
+  border: solid 1px darken($secondary-accent-color, 10%);
   border-radius: 5px;
   padding: 1rem;
 }
