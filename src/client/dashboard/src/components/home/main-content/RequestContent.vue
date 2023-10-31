@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import type {PropType} from "vue";
-import {computed, onMounted, reactive, ref, watch} from "vue";
+import {computed, onMounted, provide, reactive, ref, watch} from "vue";
 import {VAceEditor} from 'vue3-ace-editor';
 import ace from "ace-builds/src-noconflict/ace";
 import beautify from "ace-builds/src-noconflict/ext-beautify";
 import jsbeautify from 'js-beautify';
 import '@/../ace.config'
 
+interface VerbTypes {
+  label: string,
+  suffix: string,
+}
+interface MetadataTypes {
+  url: string,
+  name: string,
+  schema: object,
+}
 interface RequestDataTypes {
-  verb: object,
-  metadata: object,
+  verb: VerbTypes,
+  metadata: MetadataTypes,
 }
 
 const props = defineProps({
@@ -19,9 +28,17 @@ const props = defineProps({
   }
 });
 
-const url = computed(() => {
+const emit = defineEmits(['server-response']);
+
+const urlCopy = ref(`${props.data?.metadata.url}/${props.data.metadata.name}${props.data?.verb.suffix}`)
+
+watch(() => props.data?.verb.suffix, () => {
+  urlCopy.value = computeUrl();
+})
+const computeUrl = () => {
+  console.log('url', `${props.data?.metadata.url}/${props.data.metadata.name}${props.data?.verb.suffix}`)
   return `${props.data?.metadata.url}/${props.data.metadata.name}${props.data?.verb.suffix}`;
-});
+}
 
 const verbButtonClass = computed(() => {
   return `${props.data?.verb.label.toLowerCase()}-button`;
@@ -36,24 +53,58 @@ const schema = computed(() => {
   return schema;
 });
 
+const showSchema = computed(() => {
+  return props.data?.verb.label === 'POST' || props.data?.verb.label === 'PUT';
+});
+
 const states = ref({
   lang: 'json',
   theme: 'monokai',
   content: `${jsbeautify(JSON.stringify(schema.value), {indent_size: 4, space_in_empty_paren: true})}`,
 });
+const response = ref({isServerData: true, data: {}});
 
-onMounted( () => {
-  const editor = ace.edit("editor");
-  editor.commands.addCommand({
-    name: "beautify",
-    bindKey: {
-      win: "Ctrl-Shift-B",
-      mac: "Command-Shift-B",
+const sendRequestWithBody = () => {
+  console.log(states.value.content);
+  fetch(urlCopy.value, {
+    method: props.data?.verb.label,
+    headers: {
+      'Content-Type': 'application/json'
     },
-    exec: function () {
-      beautify.beautify(editor.session);
-    },
-  });
+    body: states.value.content
+  })
+      .then(response => response.json())
+      .then(data => {
+        response.value.data = data.data;
+        emit('server-response', response.value.data);
+      });
+}
+
+const sendRequestWithoutBody = () => {
+  fetch(urlCopy.value, {
+    method: props.data?.verb.label,
+  })
+      .then(response => response.json())
+      .then(data => {
+        response.value.data = data.data;
+        emit('server-response', response.value.data);
+      });
+}
+
+onMounted(() => {
+  if (showSchema.value) {
+    const editor = ace.edit("editor");
+    editor.commands.addCommand({
+      name: "beautify",
+      bindKey: {
+        win: "Ctrl-Shift-B",
+        mac: "Command-Shift-B",
+      },
+      exec: function () {
+        beautify.beautify(editor.session);
+      },
+    });
+  }
 });
 
 </script>
@@ -63,13 +114,15 @@ onMounted( () => {
     <div class="col d-flex">
       <div class="input-group mb-3">
         <span :class="`input-group-text ${verbButtonClass}`">{{ data.verb.label }}</span>
-        <input type="text" v-model="url" class="form-control request-url-input"
+        <input type="text" v-model="urlCopy" class="form-control request-url-input"
                aria-label="url">
       </div>
-      <button class="btn btn-sm submit-button w-25">Send request</button>
+      <button class="btn btn-sm submit-button w-25"
+              @click="showSchema ? sendRequestWithBody() : sendRequestWithoutBody()">Send request
+      </button>
     </div>
   </div>
-  <div class="row">
+  <div class="row" v-if="showSchema">
     <div class="col d-flex flex-column">
       <div class="row">
         <div class="col title">
@@ -95,6 +148,18 @@ onMounted( () => {
               }"
           />
         </div>
+      </div>
+    </div>
+  </div>
+  <div v-else>
+    <div class="row">
+      <div class="col d-flex flex-column align-items-center py-5">
+        <div class="title">
+          Request Body
+        </div>
+        <small>
+          Request body is not required for this type of request.
+        </small>
       </div>
     </div>
   </div>

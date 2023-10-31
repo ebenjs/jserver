@@ -3,12 +3,18 @@ import LeftNavigation from "@/components/home/LeftNavigation.vue";
 import MainContent from "@/components/home/MainContent.vue";
 import SubContent from "@/components/home/SubContent.vue";
 import RightNavigation from "@/components/home/RightNavigation.vue";
-import {ref} from "vue";
+import {ref, provide} from "vue";
 
 const data = ref({});
 const response = ref({ isServerData: false, data: {} });
+
+provide('server-response', response);
 const handleEndpointSelected = (receivedData) => {
   data.value = receivedData;
+}
+const handleServerResponse = (receivedServerResponse) => {
+  response.value.isServerData = true;
+  response.value.data = receivedServerResponse;
 }
 </script>
 
@@ -20,7 +26,7 @@ const handleEndpointSelected = (receivedData) => {
           <LeftNavigation @endpoint-selected="handleEndpointSelected"/>
         </div>
         <div class="col-lg-6 p-0">
-          <MainContent :data="data"/>
+          <MainContent :data="data" @server-response="handleServerResponse"/>
         </div>
         <div class="col-lg-3">
           <div class="row h-100">

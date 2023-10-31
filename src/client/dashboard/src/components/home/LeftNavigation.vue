@@ -43,7 +43,6 @@ onMounted(() => {
   <div class="menu-wrapper h-100">
     <!--    AppBar-->
     <AppBar/>
-    <hr>
     <!--    API Endpoints-->
     <div class="mt-3">
       <div class="px-5 mb-2">

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-
-import type {PropType} from "vue";
+import type {InjectionKey, PropType} from "vue";
+import {inject, ref} from "vue";
+import jsbeautify from 'js-beautify';
 
 interface ResponseDataTypes {
   isServerData: boolean,
@@ -13,6 +14,9 @@ const props = defineProps({
     required: true
   }
 });
+
+const serverResponse: ResponseDataTypes = inject('server-response');
+
 </script>
 
 <template>
@@ -30,11 +34,13 @@ const props = defineProps({
     <div class="tab-content mx-3 mt-3" id="navigationTabContent">
       <div class="tab-pane show active" id="response-tab-pane" role="tabpanel" aria-labelledby="response-tab"
            tabindex="0">
-        <div class="tab-pane-wrapper" v-if="!response.isServerData">
+        <div class="tab-pane-wrapper" v-if="!serverResponse.isServerData">
           <img src="@/assets/images/the-server-3.svg" alt="server_image" class="no-response-image"/>
           <p class="title">No response yet</p>
         </div>
-<!--        v-else-->
+        <div v-else>
+          {{ serverResponse.data }}
+        </div>
 
 
       </div>
@@ -79,5 +85,13 @@ const props = defineProps({
       }
     }
   }
+}
+
+.vue-ace-editor {
+  font-size: 16px;
+  border: 1px solid $secondary-color;
+  flex: 1;
+  min-height: 22rem;
+  border-radius: 0.5rem;
 }
 </style>

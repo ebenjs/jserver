@@ -11,9 +11,7 @@
 
 <style scoped lang="scss">
 .app-bar-wrapper {
-  p{
-    margin: 0;
-  }
+  border-bottom: 1px solid $default-border-color;
   .logo {
     width: 50px;
     height: 50px;

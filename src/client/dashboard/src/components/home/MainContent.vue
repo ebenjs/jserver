@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import WelcomeBar from "@/components/home/main-content/WelcomeBar.vue";
 import ContentPlaceholder from "@/components/home/main-content/ContentPlaceholder.vue";
-import {computed, PropType} from "vue";
+import {computed, inject, PropType, ref} from "vue";
 import RequestContent from "@/components/home/main-content/RequestContent.vue";
 
+const emit = defineEmits(['server-response']);
 const props = defineProps({
   data: {
     type: Object as PropType<{}>,
     required: true
   }
 });
+
 const isDataEmpty = computed(() => {
   return Object.keys(props.data).length === 0;
 });
+
+const handleServerResponse = (response) => {
+  emit('server-response', response);
+}
+
 </script>
 
 <template>
@@ -20,7 +27,7 @@ const isDataEmpty = computed(() => {
     <WelcomeBar/>
     <div class="h-75 pt-5">
       <ContentPlaceholder v-if="isDataEmpty"/>
-      <RequestContent v-else :data="data"/>
+      <RequestContent v-else :data="data" @server-response="handleServerResponse" />
     </div>
   </div>
 </template>
