@@ -11,6 +11,7 @@ export const bindSingleFileRoutes = (fullPath: string, app: Express, baseFileNam
     res.statusCode = 200
     res.json({
       name: baseFileName,
+      schema: data[0],
       url: `${process.env.DEFAULT_SERVER_URL}:${process.env.DEFAULT_SERVER_PORT}`
     })
   })

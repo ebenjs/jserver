@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {PropType} from "vue";
-import {computed, onMounted, provide, reactive, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {VAceEditor} from 'vue3-ace-editor';
 import ace from "ace-builds/src-noconflict/ace";
 import beautify from "ace-builds/src-noconflict/ext-beautify";
@@ -62,7 +62,8 @@ const states = ref({
   theme: 'monokai',
   content: `${jsbeautify(JSON.stringify(schema.value), {indent_size: 4, space_in_empty_paren: true})}`,
 });
-const response = ref({isServerData: true, data: {}});
+const response = ref({isServerData: true, data: {}, status: ''});
+const currentResponseStatus = ref('');
 
 const sendRequestWithBody = () => {
   console.log(states.value.content);
@@ -73,10 +74,14 @@ const sendRequestWithBody = () => {
     },
     body: states.value.content
   })
-      .then(response => response.json())
+      .then(response => {
+        currentResponseStatus.value = response.status.toString();
+        return response.json()
+      })
       .then(data => {
         response.value.data = data.data;
-        emit('server-response', response.value.data);
+        response.value.status = currentResponseStatus.value;
+        emit('server-response', response.value);
       });
 }
 
@@ -84,10 +89,14 @@ const sendRequestWithoutBody = () => {
   fetch(urlCopy.value, {
     method: props.data?.verb.label,
   })
-      .then(response => response.json())
+      .then(response => {
+        currentResponseStatus.value = response.status.toString();
+        return response.json()
+      })
       .then(data => {
         response.value.data = data.data;
-        emit('server-response', response.value.data);
+        response.value.status = currentResponseStatus.value;
+        emit('server-response', response.value);
       });
 }
 

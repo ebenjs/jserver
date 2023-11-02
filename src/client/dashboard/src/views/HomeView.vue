@@ -6,7 +6,7 @@ import RightNavigation from "@/components/home/RightNavigation.vue";
 import {ref, provide} from "vue";
 
 const data = ref({});
-const response = ref({ isServerData: false, data: {} });
+const response = ref({ isServerData: false, data: {}, status: '' });
 
 provide('server-response', response);
 const handleEndpointSelected = (receivedData) => {
@@ -14,7 +14,8 @@ const handleEndpointSelected = (receivedData) => {
 }
 const handleServerResponse = (receivedServerResponse) => {
   response.value.isServerData = true;
-  response.value.data = receivedServerResponse;
+  response.value.data = receivedServerResponse.data;
+  response.value.status = receivedServerResponse.status;
 }
 </script>
 

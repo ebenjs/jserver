@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type {InjectionKey, PropType} from "vue";
+import type {PropType, Ref, UnwrapRef} from "vue";
 import {inject, ref} from "vue";
-import jsbeautify from 'js-beautify';
+import ResponseBar from "@/components/home/sub-content/ResponseBar.vue";
 
 interface ResponseDataTypes {
   isServerData: boolean,
   data: object,
+  status: string,
 }
 
 const props = defineProps({
@@ -15,7 +16,11 @@ const props = defineProps({
   }
 });
 
-const serverResponse: ResponseDataTypes = inject('server-response');
+const isRaw = ref(true);
+const serverResponse: Ref<UnwrapRef<ResponseDataTypes>> = ref(inject('server-response') as ResponseDataTypes)
+const handleCopy = () => {
+  navigator.clipboard.writeText(JSON.stringify(serverResponse.value.data));
+}
 
 </script>
 
@@ -39,7 +44,12 @@ const serverResponse: ResponseDataTypes = inject('server-response');
           <p class="title">No response yet</p>
         </div>
         <div v-else>
-          {{ serverResponse.data }}
+          <div class="d-flex flex-column">
+            <ResponseBar :status="serverResponse.status" @copy-response-data="handleCopy"/>
+            <div class="mt-4">
+                {{ serverResponse.data }}
+            </div>
+          </div>
         </div>
 
 

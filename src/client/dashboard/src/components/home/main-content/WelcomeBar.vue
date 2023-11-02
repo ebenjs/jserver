@@ -1,24 +1,21 @@
 <script setup lang="ts">
 
+import Panel from "@/components/global/Panel.vue";
 </script>
 
 <template>
-  <div class="welcome-bar-wrapper fw-light">
+  <Panel class="panel fw-light">
     <p class="m-0">👋 Welcome to the jserver dashboard!</p>
     <hr>
     <small>
       This is a simple dashboard that allows you to manage your jserver
       instance. You can view available endpoints and execute them.
     </small>
-  </div>
+  </Panel>
 </template>
 
 <style scoped lang="scss">
-.welcome-bar-wrapper {
-  background-color: $secondary-color;
-  padding: 1rem;
-  border-radius: 1rem;
-
+.panel {
   p {
     font-size: 1.5rem;
   }
