@@ -1,4 +1,4 @@
-import { exposeJsonData } from './jserver.js'
+import { exposeJsonData } from './gserver.js'
 import { type Express } from 'express'
 import { getState, setState } from './state.js'
 import { crudAdd, crudDelete, crudFindOne, crudPut } from './crud.js'
@@ -26,7 +26,7 @@ export const bindSingleFileRoutes = (fullPath: string, app: Express, baseFileNam
     const item: object | false = crudFindOne(id)
     if (item === false) {
       res.statusCode = 404
-      res.send('Resource not found')
+      res.json('Resource not found')
       return
     }
     res.statusCode = 200
@@ -46,7 +46,7 @@ export const bindSingleFileRoutes = (fullPath: string, app: Express, baseFileNam
     const putResult = crudPut(id, postData)
     if (!putResult) {
       res.statusCode = 404
-      res.send('Resource not found')
+      res.json('Resource not found')
       return
     }
     res.statusCode = 200
@@ -58,10 +58,10 @@ export const bindSingleFileRoutes = (fullPath: string, app: Express, baseFileNam
     const deletionResult: boolean = crudDelete(id)
     if (!deletionResult) {
       res.statusCode = 404
-      res.send('Resource not found')
+      res.json('Resource not found')
       return
     }
     res.statusCode = 204
-    res.send('Resource deleted successfully')
+    res.json('Resource deleted successfully')
   })
 }

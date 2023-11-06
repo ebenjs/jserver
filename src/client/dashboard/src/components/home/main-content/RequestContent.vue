@@ -79,7 +79,7 @@ const sendRequestWithBody = () => {
         return response.json()
       })
       .then(data => {
-        response.value.data = data.data;
+        response.value.data = data.data ?? data;
         response.value.status = currentResponseStatus.value;
         emit('server-response', response.value);
       });
@@ -94,7 +94,12 @@ const sendRequestWithoutBody = () => {
         return response.json()
       })
       .then(data => {
-        response.value.data = data.data;
+        response.value.data = data.data ?? data;
+        response.value.status = currentResponseStatus.value;
+        emit('server-response', response.value);
+      })
+      .catch(error => {
+        response.value.data = error;
         response.value.status = currentResponseStatus.value;
         emit('server-response', response.value);
       });

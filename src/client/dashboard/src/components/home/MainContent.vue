@@ -17,6 +17,7 @@ const isDataEmpty = computed(() => {
 });
 
 const handleServerResponse = (response) => {
+  console.log('response', response)
   emit('server-response', response);
 }
 

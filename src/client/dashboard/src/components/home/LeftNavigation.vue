@@ -19,6 +19,11 @@ onMounted(() => {
             suffix: ""
           },
           {
+            label: "GET",
+            description: `Get one resource from ${data.name} file.`,
+            suffix: "/:id"
+          },
+          {
             label: "POST",
             description: `Create a new resource in ${data.name} file.`,
             suffix: ""

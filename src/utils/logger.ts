@@ -7,7 +7,7 @@ export const logger = winston.createLogger({
       return `${message}`
     })
   ),
-  defaultMeta: { service: 'jserver' },
+  defaultMeta: { service: 'gserver' },
   transports: [
     new winston.transports.File({ filename: 'error.log', level: 'error' })
   ]
